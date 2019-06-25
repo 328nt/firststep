@@ -71,3 +71,23 @@ Route::get('updateelo', function () {
 Route::get('destroyelo', function () {
     *modelname*::destroy([*id1*, *id2*,...]);
 });
+
+##NOTE
+
+#github
+*clone github
+CMD:
+    composer install (install all composer used in project)
+    .env.example .env (copy .env)
+
+change the infomation in .ENV
+run CMD:
+    php artisan key:generate
+    php artisan migrate
+    php artisan serve
+
+*up git
+CMD
+    git add *
+    git commit -m "note"
+    git push orrigin master

@@ -1,5 +1,12 @@
-##NORMAL
+##TUTORIAL
+#migrate
+run:    php artisan serve (run)
+add table in to db:    php artisan make:migration *name_migrate* --create='*tableindatabase*' -> php artisan migrate(update migrate to sql)
+add colum in to table in db:  php artisan make:migration *ad_name_column_to_table* table='*tablename*'
 
+#model
+
+##querry
 # INSERT
 //Insert
 Route::get('/insert', function () {
@@ -33,14 +40,17 @@ Route::get('insertel', function () {
     $*variable*= new *model*;
 
     //getdata
+    $*variable*->*columnname* = str_random(5).'*add*';
     $*variable*->*columnname* = '*add*';
-    $*variable*->*columnname* = '*add*';
+//bcrypt for password
+//str_random(5). random text
     ....
 
     //save data
     $*variable*->save();
-});
 
+    
+});
 //insert with id exsts
 Route::get('insertelo', function () {
 
@@ -90,4 +100,7 @@ run CMD:
 CMD
     git add *
     git commit -m "note"
-    git push orrigin master
+    git push origin master
+
+##ERROR
+*TokenMismatchException in VerifyCsrfToken.php line 67: add {!! csrf_field() !!} in form

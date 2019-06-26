@@ -11,6 +11,9 @@
 |
 */
 use App\Post;
+use App\User;
+use App\Product;
+use App\Category;
 
 
 Route::get('/', function () {
@@ -78,6 +81,34 @@ Route::get('insertel', function () {
     $post->save();
 });
 
+Route::get('insertuser', function () {
+
+    //create post variables.
+    $user= new User;
+
+    //getdata
+    $user->name = 'KFC1';
+    $user->email = str_random(5).'@gmail.com';
+    $user->password = bcrypt('dat');
+
+    //save data
+    $user->save();
+});
+
+Route::get('insertproduct/{name}/{cat}', function ($name, $cat) {
+    $product = new Product;
+    $product->name = $name;
+    $product->amout = "60";
+    $product->id_category = $cat;
+    $product->save();
+    echo 'added ' .$name;
+});
+
+Route::get('product/all', function () {
+    $product = Product::all()->toArray();
+    var_dump($product);
+
+});
 //add data with id
 Route::get('insertelo', function () {
 
@@ -107,6 +138,11 @@ Route::get('deleteelo', function () {
 Route::get('destroyelo', function () {
     Post::destroy([5, 6, 8]);
 });
+//delete data with eloquent destroy
+Route::get('destroyuser', function () {
+    User::destroy([7]);
+    echo "delele complete !";
+});
 //create data with mass
 Route::get('createmass', function () {
     Post::create([
@@ -115,7 +151,42 @@ Route::get('createmass', function () {
     ]);
 });
 
+Route::get('connect', function () {
+    $data = Product::find(3)->category->toArray();
+    var_dump($data);
+});
+
+Route::get('connectcat', function () {
+    $data = Category::find(2)->Product->toArray();
+    var_dump($data);
+});
+
 
 Route::resource('posts', 'PostController@index');
 Route::get('/contact/{nameR}/{email}/{phone}', 'TestController@contact');
 
+//LOGIN
+Route::get('login', function () {
+    return view('users.login');
+});
+Route::get('login1', function () {
+    return view('users.complete');
+});
+Route::post('login', 'AuthController@login')->name('login');
+Route::get('logout', 'AuthController@logout');
+
+
+//SESSION
+Route::group(['middleware' => ['web']], function () {
+    Route::get('Session', function () {
+        Session::put('kfc','CGV');
+        echo "SET SESSION";
+        echo "<br>";
+        echo Session::Get('kfc');
+        if(session::has('kfc'))
+        echo "have session";
+        else {
+            echo "not have session";
+        }
+    });
+});
